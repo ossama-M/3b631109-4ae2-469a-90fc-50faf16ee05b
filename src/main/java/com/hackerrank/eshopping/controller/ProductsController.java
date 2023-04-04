@@ -39,13 +39,21 @@ public class ProductsController {
 
     }
 
-
-
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProductRequest> getAllProduct(){
-
         return productsService.getAllProduct();
+    }
+    @GetMapping("/id")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductRequest getAllProduct(@PathVariable long id){
+        return productsService.getProdcutById(id);
+    }
+
+    @GetMapping("/{category}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductRequest> getAllProductByCategory(@PathVariable String category){
+        return productsService.getAllProdcutByCategroy(category);
     }
 
 
