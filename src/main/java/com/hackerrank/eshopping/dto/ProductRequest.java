@@ -1,28 +1,19 @@
-package com.hackerrank.eshopping.model;
+package com.hackerrank.eshopping.dto;
 
+import javax.persistence.Column;
 
-import javax.persistence.*;
-
-@Entity()
-@Table(name = "Product")
-public class Product {
-    @Id
+public class ProductRequest {
     private Long id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "category")
     private String category;
-    @Column(name = "retailPrice")
     private Double retailPrice;
-    @Column(name = "discountedPrice")
     private Double discountedPrice;
-    @Column(name = "availability")
     private Boolean availability;
 
-    public Product() {
+    public ProductRequest() {
     }
 
-    public Product(Long id, String name, String category, Double retailPrice, Double discountedPrice, Boolean availability) {
+    public ProductRequest(Long id, String name, String category, Double retailPrice, Double discountedPrice, Boolean availability) {
         this.id = id;
         this.name = name;
         this.category = category;
