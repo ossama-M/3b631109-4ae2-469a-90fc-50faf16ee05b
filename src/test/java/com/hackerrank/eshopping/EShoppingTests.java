@@ -2,7 +2,7 @@ package com.hackerrank.eshopping;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hackerrank.eshopping.model.Product;
+import com.hackerrank.eshopping.entity.Product;
 import com.hackerrank.eshopping.repository.ProductsRepository;
 import org.junit.Assert;
 import org.junit.Before;

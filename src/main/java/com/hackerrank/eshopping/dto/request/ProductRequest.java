@@ -1,4 +1,6 @@
-package com.hackerrank.eshopping.dto;
+package com.hackerrank.eshopping.dto.request;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
 
@@ -6,7 +8,9 @@ public class ProductRequest {
     private Long id;
     private String name;
     private String category;
+    @JsonProperty("retail_price")
     private Double retailPrice;
+    @JsonProperty("discounted_price")
     private Double discountedPrice;
     private Boolean availability;
 
@@ -68,5 +72,17 @@ public class ProductRequest {
 
     public void setAvailability(Boolean availability) {
         this.availability = availability;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductRequest{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", retailPrice=" + retailPrice +
+                ", discountedPrice=" + discountedPrice +
+                ", availability=" + availability +
+                '}';
     }
 }

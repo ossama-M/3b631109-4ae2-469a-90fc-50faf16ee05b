@@ -1,14 +1,16 @@
 package com.hackerrank.eshopping.service;
 
-import com.hackerrank.eshopping.dto.ProductRequest;
-import com.hackerrank.eshopping.model.Product;
+import com.hackerrank.eshopping.dto.request.ProductRequest;
+import com.hackerrank.eshopping.dto.request.UpdateRequest;
+import com.hackerrank.eshopping.entity.Product;
 import com.hackerrank.eshopping.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductsService {
@@ -22,34 +24,31 @@ public class ProductsService {
     public boolean CreateProduct(ProductRequest productRequest) {
         boolean present = productsRepository.findById(productRequest.getId()).isPresent();
         if(present) return false;
-
+        System.out.println("not found in db");
         Product tempproduct = new Product(productRequest.getId(),
                 productRequest.getName(),
                 productRequest.getCategory(),
-                Double.valueOf(decimalFormat.format(productRequest.getRetailPrice())),
-                Double.valueOf(decimalFormat.format(productRequest.getDiscountedPrice())),
+                productRequest.getRetailPrice(),
+                productRequest.getDiscountedPrice(),
                 productRequest.getAvailability());
         productsRepository.save(tempproduct);
         return true ;
     }
 
-    public boolean updateProduct(ProductRequest productRequest, long id) {
-        boolean present = productsRepository.findById(id).isPresent();
-        if(!present) return false;
-
-        Product tempproduct = new Product(id,
-                productRequest.getName(),
-                productRequest.getCategory(),
-                Double.valueOf(decimalFormat.format(productRequest.getRetailPrice())),
-                Double.valueOf(decimalFormat.format(productRequest.getDiscountedPrice())),
-                productRequest.getAvailability());
-        productsRepository.save(tempproduct);
+    public boolean updateProduct(UpdateRequest updateRequest, long id) {
+        Product product = productsRepository.findById(id).orElse(new Product());
+        if (Objects.isNull(product.getName()))
+            return false ;
+        product.setAvailability(updateRequest.getAvailability());
+        product.setDiscountedPrice(updateRequest.getDiscountedPrice());
+        product.setRetailPrice(updateRequest.getRetailPrice());
+        productsRepository.save(product);
         return true ;
     }
 
     public List<ProductRequest> getAllProduct() {
         List<Product>products = productsRepository.findAll();
-        return products.stream().map(prod ->mapToProductResponse(prod)).toList();
+        return products.stream().map(prod ->mapToProductResponse(prod)).collect(Collectors.toList());
     }
 
 
@@ -65,7 +64,7 @@ public class ProductsService {
 
     public List<ProductRequest> getAllProdcutByCategroy(String category) {
         List<Product>products = productsRepository.findAllByCategory(category);
-        return products.stream().map(prod ->mapToProductResponse(prod)).toList();
+        return products.stream().map(prod ->mapToProductResponse(prod)).collect(Collectors.toList());
     }
 
     private ProductRequest mapToProductResponse(Product product) {

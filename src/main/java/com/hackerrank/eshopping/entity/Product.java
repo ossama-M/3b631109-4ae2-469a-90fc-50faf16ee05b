@@ -1,4 +1,4 @@
-package com.hackerrank.eshopping.model;
+package com.hackerrank.eshopping.entity;
 
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ public class Product {
     private String category;
     @Column(name = "retailPrice")
     private Double retailPrice;
-    @Column(name = "discountedPrice")
+    @Column(name = "DISCOUNTEDPRICE")
     private Double discountedPrice;
     @Column(name = "availability")
     private Boolean availability;
